@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Elm Lazy Loading Playground</title>
+</head>
+<body>
+    <div id="root"></div>
+    <button id="lazy-load-btn">Lazy Load!</button>
+    <div id="external"></div>
+    <script src="build/app.custom.js"></script>
+    <script>
+
+customElements.define("lazy-external", class extends HTMLElement {
+    constructor() {
+        super();
+    }
+    connectedCallback() {
+        const that = this;
+        const root = document.createElement("div");
+        this.appendChild(root);
+
+        Elm.Lazy.loadExternal().then(function (alreadyLoaded) {
+            if (alreadyLoaded) return;
+
+            that.app = Elm.External.init({
+                node: root,
+            });
+        });
+    }
+    disconnectedCallback() {
+        this.app = null;
+    }
+});
+
+document.querySelector("#lazy-load-btn").addEventListener("click", function () {
+    const node = document.createElement("lazy-external");
+    const root = document.querySelector("#external");
+
+    if (root.childNodes.length > 0) {
+        return;
+    }
+
+    root.appendChild(node);
+});
+
+const app = Elm.Main.init({
+    node: document.querySelector("#root"),
+});
+
+    </script>
+</body>
+</html>

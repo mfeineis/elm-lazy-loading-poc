@@ -1,0 +1,17 @@
+{
+  "name": "elm-lazy-loading-poc",
+  "version": "0.1.0",
+  "description": "Exploring lazy loading modules with Elm",
+  "main": "index.js",
+  "scripts": {
+    "build": "elm make src/Main.elm src/External.elm --output=dist/app.full.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Martin Feineis",
+  "license": "BSD-3-Clause",
+  "devDependencies": {
+    "elm": "^0.19.0-no-deps",
+    "elm-format": "^0.8.1",
+    "elm-json": "^0.2.0"
+  }
+}
